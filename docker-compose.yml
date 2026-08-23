@@ -1,0 +1,65 @@
+services:
+
+  # ─────────────────────────────────────────────────────────────────
+  # Backend  →  siklika-api.neoartd.my.id
+  # ─────────────────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: siklika-backend
+    restart: unless-stopped
+    environment:
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    expose:
+      - "5000"
+    networks:
+      - siklika-net
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:5000/api/health')\" || exit 1"]
+      interval: 30s
+      timeout: 15s
+      retries: 5
+      start_period: 40s
+    labels:
+      # Traefik labels (for reverse-proxy via traefik; used when running with reverse-proxy profile)
+      - "traefik.enable=true"
+      - "traefik.http.routers.siklika-api.rule=Host(`siklika-api.neoartd.my.id`)"
+      - "traefik.http.routers.siklika-api.entrypoints=websecure"
+      - "traefik.http.routers.siklika-api.tls.certresolver=letsencrypt"
+      - "traefik.http.services.siklika-api.loadbalancer.server.port=5000"
+
+  # ─────────────────────────────────────────────────────────────────
+  # Frontend  →  siklika.neoartd.my.id
+  # ─────────────────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: siklika-frontend
+    restart: unless-stopped
+    expose:
+      - "80"
+    depends_on:
+      - backend
+    networks:
+      - siklika-net
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost/health 2>/dev/null || curl -sf http://localhost/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.siklika-frontend.rule=Host(`siklika.neoartd.my.id`)"
+      - "traefik.http.routers.siklika-frontend.entrypoints=websecure"
+      - "traefik.http.routers.siklika-frontend.tls.certresolver=letsencrypt"
+      - "traefik.http.services.siklika-frontend.loadbalancer.server.port=80"
+
+networks:
+  siklika-net:
+    name: siklika-net
+    driver: bridge
+    # If you are running Traefik in a separate compose stack, use an external network:
+    # external: true
