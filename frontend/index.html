@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Siklika : Asisten Prediksi Siklus & Edukasi Kesehatan Reproduksi</title>
+  <meta name="description"
+    content="Siklika membantu kamu memahami siklus menstruasi melalui prediksi berbasis AI dan edukasi kesehatan reproduksi yang personal dan terpercaya." />
+  <link rel="icon" type="image/png" href="assets/logo-mark.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/logo-mark.png" alt="" class="nav-logo-img" />
+        <span class="logo-text">Siklika</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="active">Beranda</a></li>
+        <li><a href="dashboard.html">Prediksi</a></li>
+        <li><a href="chatbot.html">Chatbot</a></li>
+        <li><a href="riwayat.html">Riwayat</a></li>
+      </ul>
+      <button class="nav-cta" onclick="window.location.href='dashboard.html'">Mulai Prediksi</button>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-copy">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          AI-Powered · Berbasis Data Personal
+        </div>
+        <h1 class="hero-title">
+          Kenali Siklus<br />
+          <em>Tubuhmu Sendiri</em>
+        </h1>
+        <p class="hero-subtitle">
+          Siklika menganalisis riwayat siklus menstruasimu menggunakan machine learning
+          untuk memberikan estimasi yang personal bukan angka generik.
+          Ditambah chatbot edukasi untuk semua pertanyaanmu tentang kesehatan reproduksi.
+        </p>
+        <div class="hero-actions">
+          <a href="dashboard.html" class="btn btn-primary btn-lg">
+            <span>Mulai Prediksi</span>
+            <i data-lucide="arrow-right" class="btn-icon"></i>
+          </a>
+          <a href="chatbot.html" class="btn btn-outline btn-lg">Tanya Chatbot</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-value">2.54</span>
+            <span class="stat-label">hari MAE akurasi</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-value">581</span>
+            <span class="stat-label">user dilatih</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-value">AI</span>
+            <span class="stat-label">Gemini-powered</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="phone-mockup">
+          <div class="phone-screen">
+            <div class="mock-header">
+              <img src="assets/logo.png" alt="Siklika" class="mock-logo-img" />
+            </div>
+            <div class="mock-card">
+              <div class="mock-label">Estimasi Siklus Berikutnya</div>
+              <div class="mock-value">28 hari</div>
+              <div class="mock-badge stable">
+                <span>Stabil</span>
+                <i data-lucide="check" style="width: 14px; height: 14px; stroke-width: 2.5;"></i>
+              </div>
+              <div class="mock-bar-wrap">
+                <div class="mock-bar-track">
+                  <div class="mock-bar-fill" style="width:82%"></div>
+                </div>
+                <span class="mock-bar-pct">82% Keyakinan</span>
+              </div>
+            </div>
+            <div class="mock-cycle-dots">
+              <span class="dot past"></span>
+              <span class="dot past"></span>
+              <span class="dot past"></span>
+              <span class="dot current pulse"></span>
+              <span class="dot future"></span>
+              <span class="dot future"></span>
+            </div>
+            <div class="mock-tip">
+              Siklus kamu terlihat teratur terus pantau!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="trust-bar">
+    <div class="container trust-bar-inner">
+      <div class="trust-item">
+        <div class="trust-icon">
+          <i data-lucide="shield-check"></i>
+        </div>
+        <div>
+          <strong>Data di perangkatmu</strong>
+          <p>Riwayat tersimpan di browser, tidak wajib ke server.</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <i data-lucide="line-chart"></i>
+        </div>
+        <div>
+          <strong>Model Random Forest</strong>
+          <p>Dilatih dari 2.412 pasangan siklus nyata.</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <i data-lucide="message-square-heart"></i>
+        </div>
+        <div>
+          <strong>Edukasi, bukan diagnosis</strong>
+          <p>Jawaban hangat dengan batas yang jelas.</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <i data-lucide="crosshair"></i>
+        </div>
+        <div>
+          <strong>Interval & keyakinan</strong>
+          <p>Setiap prediksi disertai rentang estimasi.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Fitur Utama</span>
+        <h2 class="section-title">Semua yang Kamu Butuhkan</h2>
+        <p class="section-subtitle">Dirancang khusus untuk remaja dan wanita muda Indonesia</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card card-primary">
+          <div class="feature-icon">
+            <i data-lucide="sparkles"></i>
+          </div>
+          <h3>Prediksi Cerdas</h3>
+          <p>Model Random Forest yang dilatih dari 2.412 pasangan siklus nyata. Makin banyak riwayat yang kamu masukkan,
+            makin akurat prediksinya.</p>
+          <a href="dashboard.html" class="feature-link">
+            Coba Sekarang <i data-lucide="arrow-right" class="inline-icon"></i>
+          </a>
+        </div>
+        <div class="feature-card card-secondary">
+          <div class="feature-icon">
+            <i data-lucide="bot-message-square"></i>
+          </div>
+          <h3>Chatbot Edukasi</h3>
+          <p>Didukung Google Gemini AI. Tanya apapun soal menstruasi, kram, mood, keputihan — jawaban edukatif, bukan
+            diagnosis.</p>
+          <a href="chatbot.html" class="feature-link">
+            Mulai Ngobrol <i data-lucide="arrow-right" class="inline-icon"></i>
+          </a>
+        </div>
+        <div class="feature-card card-accent">
+          <div class="feature-icon">
+            <i data-lucide="activity"></i>
+          </div>
+          <h3>Riwayat Siklus</h3>
+          <p>Catat dan visualisasikan setiap siklus di grafik interaktif. Lihat tren pola siklus dari waktu ke waktu.
+          </p>
+          <a href="riwayat.html" class="feature-link">
+            Lihat Riwayat <i data-lucide="arrow-right" class="inline-icon"></i>
+          </a>
+        </div>
+        <div class="feature-card card-soft">
+          <div class="feature-icon">
+            <i data-lucide="lock-keyhole"></i>
+          </div>
+          <h3>Transparansi & Privasi</h3>
+          <p>Prediksi disertai indikator keyakinan dan interval perkiraan. Data tersimpan di browser kamu saja — tidak
+            dikirim ke server tanpa izin.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how-it-works section" id="how">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Cara Pakai</span>
+        <h2 class="section-title">Tiga Langkah Mudah</h2>
+      </div>
+      <div class="steps-grid">
+        <div class="step-item">
+          <div class="step-number">01</div>
+          <div class="step-content">
+            <h3>Masukkan Riwayat Siklus</h3>
+            <p>Isi usia dan riwayat panjang siklus beberapa bulan terakhir. Semakin banyak riwayat, makin akurat
+              prediksinya.</p>
+          </div>
+          <div class="step-arrow">
+            <i data-lucide="arrow-right"></i>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">02</div>
+          <div class="step-content">
+            <h3>Terima Estimasi Personal</h3>
+            <p>Model AI menganalisis polamu dan memberikan estimasi panjang siklus berikutnya beserta tingkat keyakinan.
+            </p>
+          </div>
+          <div class="step-arrow">
+            <i data-lucide="arrow-right"></i>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">03</div>
+          <div class="step-content">
+            <h3>Tanya ke Chatbot</h3>
+            <p>Ada gejala yang bikin bingung? Tanya langsung ke chatbot edukasi untuk penjelasan yang hangat dan
+              terpercaya.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="insights section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Kenapa Personal?</span>
+        <h2 class="section-title">Bukan sekadar rata-rata 28 hari</h2>
+        <p class="section-subtitle">Siklika membaca pola milikmu, lalu menjelaskan batasnya dengan jujur.</p>
+      </div>
+      <div class="insight-grid">
+        <article class="insight-card">
+          <span class="kicker">Data</span>
+          <h3>Riwayat lebih dari satu angka</h3>
+          <p>Panjang siklus, usia, dan urutan siklus dipakai bersama agar estimasi tidak hanya meniru rata-rata
+            populasi.</p>
+        </article>
+        <article class="insight-card">
+          <span class="kicker">Transparansi</span>
+          <h3>Ada rentang, bukan janji pasti</h3>
+          <p>Kamu melihat batas bawah, estimasi, dan batas atas. Kalau polanya tidak teratur, statusnya juga ditandai.
+          </p>
+        </article>
+        <article class="insight-card">
+          <span class="kicker">Pendampingan</span>
+          <h3>Sika siap menjawab rasa penasaran</h3>
+          <p>Dari kram, mood, sampai keputihan — chatbot memberi konteks edukatif dan mengingatkan kapan harus ke tenaga
+            medis.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq section" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">FAQ</span>
+        <h2 class="section-title">Pertanyaan yang sering muncul</h2>
+      </div>
+      <div class="faq-grid">
+        <article class="faq-item">
+          <h3>Apakah Siklika bisa mendiagnosis?</h3>
+          <p>Tidak. Estimasi dan chatbot bersifat informatif. Keluhan serius tetap perlu diperiksa tenaga medis.</p>
+        </article>
+        <article class="faq-item">
+          <h3>Berapa banyak riwayat yang ideal?</h3>
+          <p>Minimal satu siklus terakhir sudah bisa. 3–6 siklus sebelumnya biasanya membuat prediksi lebih stabil.</p>
+        </article>
+        <article class="faq-item">
+          <h3>Data saya dikirim ke mana?</h3>
+          <p>Catatan riwayat disimpan di browser. Prediksi dan chat hanya dikirim ke backend saat kamu memakai fitur
+            itu.</p>
+        </article>
+        <article class="faq-item">
+          <h3>Siklus 21–45 hari itu apa?</h3>
+          <p>Itu rentang yang sering dipakai sebagai acuan “umum”. Di luar itu, Siklika menandai agar kamu lebih
+            waspada.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container">
+      <div>
+        <h2>Siap mengenal pola siklusmu lebih dekat?</h2>
+        <p>Mulai dari prediksi singkat, lalu simpan ke riwayat agar grafiknya terisi seiring waktu.</p>
+      </div>
+      <a href="dashboard.html" class="btn btn-primary btn-lg">Mulai Prediksi</a>
+    </div>
+  </section>
+
+  <div class="disclaimer-banner">
+    <div class="container">
+      <span class="disclaimer-icon">
+        <i data-lucide="shield-alert"></i>
+      </span>
+      <p><strong>Catatan Penting:</strong> Estimasi Siklika dihasilkan dari model statistik berbasis riwayat siklus,
+        <em>bukan diagnosis medis</em>. Untuk keluhan kesehatan reproduksi, konsultasikan ke tenaga medis.
+      </p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">
+            <img src="assets/logo-mark.png" alt="" class="footer-logo-img" />
+            <span class="footer-wordmark">Siklika</span>
+          </div>
+          <p class="footer-desc">Asisten prediksi siklus & edukasi kesehatan reproduksi berbasis AI untuk remaja dan
+            wanita muda Indonesia.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Fitur</h4>
+          <div class="footer-links">
+            <a href="dashboard.html">Prediksi Siklus</a>
+            <a href="chatbot.html">Chatbot Sika</a>
+            <a href="riwayat.html">Riwayat & Grafik</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Panduan</h4>
+          <div class="footer-links">
+            <a href="#how">Cara pakai</a>
+            <a href="#faq">FAQ</a>
+            <a href="dashboard.html">Mulai sekarang</a>
+          </div>
+        </div>
+      </div>
+      <p class="footer-copy">© 2026 Siklika · Dibuat untuk kesehatan reproduksi Indonesia</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    // Inisialisasi ikon Lucide
+    lucide.createIcons();
+  </script>
+</body>
+
+</html>

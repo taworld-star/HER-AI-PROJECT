@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chatbot Edukasi Siklika</title>
+    <meta name="description"
+        content="Tanya apapun seputar kesehatan reproduksi kepada chatbot AI Siklika yang hangat dan terpercaya." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap"
+        rel="stylesheet" />
+    <link rel="icon" type="image/png" href="assets/logo-mark.png" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo-mark.png" alt="" class="nav-logo-img" />
+                <span class="logo-text">Siklika</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="dashboard.html">Prediksi</a></li>
+                <li><a href="chatbot.html" class="active">Chatbot</a></li>
+                <li><a href="riwayat.html">Riwayat</a></li>
+            </ul>
+            <button class="nav-cta" onclick="window.location.href='dashboard.html'">Mulai Prediksi</button>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="page-main chatbot-page">
+        <div class="container chatbot-container">
+
+            <!-- Sidebar -->
+            <div class="chat-sidebar">
+                <div class="sidebar-header">
+                    <div class="chatbot-avatar">
+                        <img src="assets/logo-mark.png" alt="Sika" class="chatbot-avatar-img" />
+                    </div>
+                    <div>
+                        <h2>Sika</h2>
+                        <p class="chatbot-tagline">Asisten Edukasi Siklika</p>
+                    </div>
+                </div>
+
+                <div class="sidebar-info">
+                    <p>Halo! Aku <strong>Sika</strong>, asisten edukasi kesehatan reproduksi Siklika. Tanya aku tentang:
+                    </p>
+                </div>
+
+                <div class="topic-pills" id="topicPills">
+                    <button class="topic-pill" data-msg="Apa itu siklus menstruasi normal?">Siklus Normal</button>
+                    <button class="topic-pill"
+                        data-msg="Kram perutku sangat sakit saat haid, apa yang harus kulakukan?">Kram Haid</button>
+                    <button class="topic-pill" data-msg="Perubahan mood sebelum haid itu normal?">Perubahan
+                        Mood</button>
+                    <button class="topic-pill" data-msg="Siklus haidku sudah telat 2 minggu, kenapa ya?">Siklus
+                        Telat</button>
+                    <button class="topic-pill"
+                        data-msg="Darah haid yang keluar sangat banyak, apakah berbahaya?">Perdarahan Berat</button>
+                    <button class="topic-pill" data-msg="Keputihan yang normal itu seperti apa?">Keputihan</button>
+                </div>
+
+                <div class="sidebar-disclaimer">
+                    <span>⚕️</span>
+                    <p>Chatbot ini bersifat edukatif, bukan pengganti konsultasi medis.</p>
+                </div>
+
+                <button class="btn btn-ghost btn-full" id="clearChatBtn" style="margin-top:auto">🗑️ Bersihkan
+                    Chat</button>
+            </div>
+
+            <!-- Chat Area -->
+            <div class="chat-area">
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Welcome message -->
+                    <div class="message bot-message" id="welcomeMsg">
+                        <div class="msg-avatar"><img src="assets/logo-mark.png" alt="Sika" class="msg-avatar-img" /></div>
+                        <div class="msg-bubble">
+                            <p>Halo! Aku <strong>Sika</strong>, teman belajarmu seputar kesehatan reproduksi 💙</p>
+                            <p>Kamu bisa tanya apa saja dari soal kram, mood PMS, tanda siklus tidak teratur, sampai
+                                keputihan. Aku akan bantu dengan informasi yang akurat dan hangat.</p>
+                            <p><em>Ingat ya, jawaban aku bersifat edukatif  untuk kondisi serius, tetap konsultasikan
+                                    ke tenaga medis.</em></p>
+                        </div>
+                        <span class="msg-time">Sekarang</span>
+                    </div>
+                </div>
+
+                <!-- Typing indicator -->
+                <div class="typing-indicator" id="typingIndicator" style="display:none">
+                    <div class="msg-avatar small"><img src="assets/logo-mark.png" alt="Sika" class="msg-avatar-img" /></div>
+                    <div class="typing-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+
+                <!-- Input area -->
+                <div class="chat-input-area">
+                    <div class="chat-input-wrapper">
+                        <textarea id="chatInput" class="chat-input"
+                            placeholder="Ketik pertanyaanmu di sini... (misal: Kram saat haid terasa parah)" rows="1"
+                            maxlength="500"></textarea>
+                        <button class="send-btn" id="sendBtn" aria-label="Kirim">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13" />
+                                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                            </svg>
+                        </button>
+                    </div>
+                    <p class="input-hint">Tekan Enter untuk kirim · Shift+Enter untuk baris baru</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+    <script src="chatbot.js"></script>
+</body>
+
+</html>

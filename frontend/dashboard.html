@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prediksi Siklus Siklika</title>
+    <meta name="description"
+        content="Masukkan riwayat siklus menstruasimu untuk mendapatkan estimasi personal dari AI Siklika." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap"
+        rel="stylesheet" />
+    <link rel="icon" type="image/png" href="assets/logo-mark.png" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo-mark.png" alt="" class="nav-logo-img" />
+                <span class="logo-text">Siklika</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="dashboard.html" class="active">Prediksi</a></li>
+                <li><a href="chatbot.html">Chatbot</a></li>
+                <li><a href="riwayat.html">Riwayat</a></li>
+            </ul>
+            <button class="nav-cta" onclick="window.location.href='chatbot.html'">Tanya Chatbot</button>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="page-main dashboard-page">
+        <div class="container">
+
+            <div class="page-header">
+                <h1 class="page-title">Prediksi Siklus <em>Pribadimu</em></h1>
+                <p class="page-subtitle">Isi form dengan usia dan panjang siklus. Tambahkan riwayat 1–6 siklus agar model punya konteks yang lebih kaya.</p>
+            </div>
+
+            <div class="dash-aside" style="margin-bottom: 20px;">
+                <div class="tip-chip">
+                    <h4>Cara hitung panjang siklus</h4>
+                    <p>Dari hari pertama haid sampai sehari sebelum haid berikutnya. Contoh: 1 Mar–28 Mar = 28 hari.</p>
+                </div>
+                <div class="tip-chip">
+                    <h4>Rentang yang sering dianggap umum</h4>
+                    <p>Banyak sumber memakai 21–45 hari sebagai acuan. Di luar itu, hasil diberi status perhatian.</p>
+                </div>
+                <div class="tip-chip">
+                    <h4>Makin banyak riwayat, makin jelas</h4>
+                    <p>Satu angka sudah bisa diprediksi. Tiga sampai enam siklus membantu model melihat pola, bukan satu titik.</p>
+                </div>
+                <div class="tip-chip">
+                    <h4>Bukan diagnosis</h4>
+                    <p>Estimasi bersifat informatif. Nyeri hebat, perdarahan sangat banyak, atau telat berkepanjangan = periksa ke medis.</p>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+
+                <!-- Input Panel -->
+                <div class="input-panel">
+                    <div class="panel-card">
+                        <div class="panel-header">
+                            <span class="panel-icon">📋</span>
+                            <h2>Data Siklus</h2>
+                        </div>
+
+                        <form id="predictionForm" class="prediction-form" novalidate>
+
+                            <div class="form-group">
+                                <label for="age">Usiamu (tahun)</label>
+                                <div class="input-wrapper">
+                                    <input type="number" id="age" name="age" min="10" max="60" placeholder="Contoh: 22"
+                                        required />
+                                    <span class="input-icon">👤</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="current_cycle">Panjang Siklus Terakhir (hari)</label>
+                                <div class="input-wrapper">
+                                    <input type="number" id="current_cycle" name="current_cycle" min="15" max="60"
+                                        placeholder="Contoh: 28" required />
+                                    <span class="input-icon">📅</span>
+                                </div>
+                                <small class="form-hint">Hitung dari hari pertama haid bulan ini sampai hari sebelum
+                                    haid berikutnya.</small>
+                            </div>
+
+                            <!-- History inputs -->
+                            <div class="form-group">
+                                <label>Riwayat Siklus Sebelumnya (opsional tapi disarankan)</label>
+                                <small class="form-hint">Masukkan dari yang terlama ke yang terbaru. Minimal 1, maksimal
+                                    6.</small>
+                                <div id="historyContainer" class="history-list">
+                                    <div class="history-item">
+                                        <span class="hist-label">Siklus ke-1</span>
+                                        <div class="input-wrapper compact">
+                                            <input type="number" class="hist-input" min="15" max="60"
+                                                placeholder="hari" />
+                                            <span class="input-icon">📅</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hist-controls">
+                                    <button type="button" id="addHistBtn" class="btn btn-outline btn-sm">+ Tambah
+                                        Siklus</button>
+                                    <button type="button" id="removeHistBtn" class="btn btn-ghost btn-sm"
+                                        style="display:none">− Hapus</button>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+                                <span id="btnText">🔮 Dapatkan Prediksi</span>
+                                <span id="btnLoader" class="btn-loader" style="display:none">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" class="spin">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <path d="M12 6v6l4 2" />
+                                    </svg>
+                                    Memproses...
+                                </span>
+                            </button>
+
+                        </form>
+                    </div>
+
+                    <!-- Disclaimer -->
+                    <div class="disclaimer-card">
+                        <span>⚕️</span>
+                        <p>Estimasi ini bersifat <strong>informatif</strong>, bukan diagnosis medis. Untuk keluhan
+                            serius, segera konsultasikan ke tenaga medis.</p>
+                    </div>
+                </div>
+
+                <!-- Result Panel -->
+                <div class="result-panel">
+
+                    <!-- Empty state -->
+                    <div class="empty-state" id="emptyState">
+                        <div class="empty-illustration">
+                            <div class="empty-orbit">
+                                <div class="empty-planet"></div>
+                                <div class="empty-moon"></div>
+                            </div>
+                        </div>
+                        <h3>Prediksi akan muncul di sini</h3>
+                        <p>Isi form di kiri, lalu klik “Dapatkan Prediksi”. Hasilnya berisi estimasi, rentang, dan tingkat keyakinan.</p>
+                        <ul class="guide-list">
+                            <li>Usia 10–60 tahun</li>
+                            <li>Panjang siklus 15–60 hari</li>
+                            <li>Riwayat opsional, disarankan</li>
+                            <li>Bisa disimpan ke halaman Riwayat</li>
+                        </ul>
+                    </div>
+
+                    <!-- Result card (hidden until prediction) -->
+                    <div class="result-card" id="resultCard" style="display:none">
+
+                        <div class="result-header">
+                            <span class="result-emoji" id="resultEmoji">🌸</span>
+                            <div>
+                                <p class="result-label">Estimasi Siklus Berikutnya</p>
+                                <h2 class="result-value" id="resultDays">-- hari</h2>
+                            </div>
+                        </div>
+
+                        <!-- Stability badge -->
+                        <div class="stability-badge" id="stabilityBadge">
+                            <span id="stabilityLabel">--</span>
+                        </div>
+
+                        <!-- Confidence bar -->
+                        <div class="confidence-section">
+                            <div class="confidence-header">
+                                <span>Tingkat Keyakinan</span>
+                                <strong id="confidencePct">--%</strong>
+                            </div>
+                            <div class="confidence-track">
+                                <div class="confidence-fill" id="confidenceFill"></div>
+                            </div>
+                        </div>
+
+                        <!-- Prediction range -->
+                        <div class="range-section">
+                            <div class="range-item">
+                                <span class="range-label">Batas Bawah</span>
+                                <span class="range-value" id="lowerBound">-- hari</span>
+                            </div>
+                            <div class="range-divider">—</div>
+                            <div class="range-item">
+                                <span class="range-label">Estimasi</span>
+                                <span class="range-value highlight" id="centerPred">-- hari</span>
+                            </div>
+                            <div class="range-divider">—</div>
+                            <div class="range-item">
+                                <span class="range-label">Batas Atas</span>
+                                <span class="range-value" id="upperBound">-- hari</span>
+                            </div>
+                        </div>
+
+                        <!-- Visual timeline -->
+                        <div class="timeline-section">
+                            <div class="timeline-track" id="timelineTrack"></div>
+                            <div class="timeline-labels">
+                                <span>15</span><span>28</span><span>45</span><span>60</span>
+                            </div>
+                        </div>
+
+                        <!-- Message -->
+                        <div class="result-message" id="resultMessage"></div>
+
+                        <!-- Consult CTA -->
+                        <div class="consult-cta" id="consultCta" style="display:none">
+                            <span>🏥</span>
+                            <p>Siklika menyarankan kamu berkonsultasi ke tenaga medis untuk kondisi ini.</p>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="result-actions">
+                            <button class="btn btn-outline" onclick="saveToHistory()">💾 Simpan ke Riwayat</button>
+                            <button class="btn btn-ghost" onclick="askChatbot()">💬 Tanya Chatbot</button>
+                        </div>
+                    </div>
+
+                    <!-- Error state -->
+                    <div class="error-card" id="errorCard" style="display:none">
+                        <span class="error-icon">⚠️</span>
+                        <h3>Koneksi ke Server Gagal</h3>
+                        <p id="errorMsg">Periksa apakah backend Flask sudah berjalan di
+                            <code>http://localhost:5000</code></p>
+                        <button class="btn btn-outline" onclick="retryPrediction()">Coba Lagi</button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-brand">
+                <img src="assets/logo-mark.png" alt="" class="footer-logo-img" />
+                <span class="footer-wordmark">Siklika</span>
+            </div>
+            <p class="footer-copy">© 2026 Siklika · Bukan pengganti konsultasi medis</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+﻿
+  [FAIL] GET /health
+         => HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001456F93B0E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+  [FAIL] POST /predict - normal (with history)
+         => HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/predict (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001456F90B610>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+  [FAIL] POST /predict - cold start (no history)
+         => HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/predict (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001456F90BED0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+  [FAIL] POST /predict - short irregular cycle
+         => HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/predict (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001456FA08770>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+  [FAIL] POST /predict - long cycle
+         => HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/predict (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001456FA08E90>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+  [FAIL] POST /predict - missing 'age' returns 400
+         => HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/predict (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001456F9A7530>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+  [FAIL] POST /predict - missing 'cycle_length' returns 400
+         => HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/predict (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001456F9C6580>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+  [FAIL] POST /predict - prediction keys present
+         => HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/predict (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001456F9C6CF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+  [FAIL] POST /predict - prediction body structure
+         => HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/predict (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001456F9C6F10>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+  [FAIL] POST /chat - 'kram' keyword triggers KB
+         => HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/chat (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001456F9C7130>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+  [FAIL] POST /chat - 'telat' keyword
+         => HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/chat (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001456F9C7350>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+  [FAIL] POST /chat - 'mood' keyword
+         => HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/chat (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001456F9C7570>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+  [FAIL] POST /chat - 'darah' keyword
+         => HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/chat (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001456F9C7790>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+  [FAIL] POST /chat - 'keputihan' keyword
+         => HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/chat (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001456F9C79B0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+  [FAIL] POST /chat - unknown topic (fallback)
+         => HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/chat (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001456F9C79B0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+  [FAIL] POST /chat - empty message returns 400
+         => HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/chat (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001456F9C7790>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+  [FAIL] GET /symptoms
+         => HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/symptoms (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001456F9C7570>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+  [FAIL] GET /symptoms - all 5 keywords present
+         => HTTPConnectionPool(host='localhost', port=5000): Max retries exceeded with url: /api/symptoms (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001456F9C7350>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+
+  ==================================================
+  Results: 0 passed / 18 failed / 18 total
+  ==================================================

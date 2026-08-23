@@ -1,0 +1,6 @@
+{
+    "python.defaultInterpreterPath": "C:\\Users\\Aspire 3\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "python.analysis.extraPaths": [],
+    "python.linting.enabled": false,
+    "python.analysis.typeCheckingMode": "off"
+}

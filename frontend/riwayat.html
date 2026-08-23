@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Riwayat Siklus Siklika</title>
+    <meta name="description" content="Lihat dan kelola riwayat siklus menstruasimu di Siklika." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap"
+        rel="stylesheet" />
+    <link rel="icon" type="image/png" href="assets/logo-mark.png" />
+    <link rel="stylesheet" href="style.css" />
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo-mark.png" alt="" class="nav-logo-img" />
+                <span class="logo-text">Siklika</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="dashboard.html">Prediksi</a></li>
+                <li><a href="chatbot.html">Chatbot</a></li>
+                <li><a href="riwayat.html" class="active">Riwayat</a></li>
+            </ul>
+            <button class="nav-cta" onclick="window.location.href='dashboard.html'">Mulai Prediksi</button>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="page-main riwayat-page">
+        <div class="container">
+
+            <div class="page-header">
+                <h1 class="page-title">Riwayat <em>Siklus</em></h1>
+                <p class="page-subtitle">Visualisasi pola siklus dari waktu ke waktu. Simpan prediksi atau tambah log manual agar grafik, tabel, dan kalender terisi.</p>
+            </div>
+
+            <div class="stats-row" id="statsRow">
+                <div class="stat-card">
+                    <span class="stat-icon icon-purple">
+                        <i data-lucide="bar-chart-2"></i>
+                    </span>
+                    <div>
+                        <span class="stat-number" id="totalCycles">0</span>
+                        <span class="stat-desc">Siklus Tercatat</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon icon-rose">
+                        <i data-lucide="ruler"></i>
+                    </span>
+                    <div>
+                        <span class="stat-number" id="avgLength">--</span>
+                        <span class="stat-desc">Rata-rata (hari)</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon icon-amber">
+                        <i data-lucide="trending-down"></i>
+                    </span>
+                    <div>
+                        <span class="stat-number" id="minLength">--</span>
+                        <span class="stat-desc">Terpendek (hari)</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon icon-emerald">
+                        <i data-lucide="trending-up"></i>
+                    </span>
+                    <div>
+                        <span class="stat-number" id="maxLength">--</span>
+                        <span class="stat-desc">Terpanjang (hari)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="riwayat-layout">
+                <div class="side-stack">
+                    <div class="chart-container panel-card" id="chartContainer">
+                        <div class="panel-header">
+                            <div class="panel-title-wrap">
+                                <span class="panel-icon">
+                                    <i data-lucide="line-chart"></i>
+                                </span>
+                                <h2>Grafik Panjang Siklus</h2>
+                            </div>
+                            <div class="chart-legend">
+                                <span class="legend-dot cycle-dot"></span><span>Siklus Aktual</span>
+                                <span class="legend-dot avg-dot"></span><span>Rata-rata</span>
+                                <span class="legend-line normal-line"></span><span>Rentang Normal (21–45)</span>
+                            </div>
+                        </div>
+                        <div class="chart-area">
+                            <div class="empty-chart" id="emptyChart">
+                                <p>Belum ada data siklus. Lakukan prediksi lalu simpan, atau tambah log manual di kalender.</p>
+                                <a href="dashboard.html" class="btn btn-primary">Mulai Prediksi</a>
+                            </div>
+                            <canvas id="cycleChart" style="display:none"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="table-container panel-card" id="tableContainer">
+                        <div class="panel-header">
+                            <div class="panel-title-wrap">
+                                <span class="panel-icon">
+                                    <i data-lucide="clipboard-list"></i>
+                                </span>
+                                <h2>Detail Siklus</h2>
+                            </div>
+                            <div class="table-actions">
+                                <button class="btn btn-outline btn-sm" id="exportBtn">
+                                    <i data-lucide="download" class="btn-sub-icon"></i> Export CSV
+                                </button>
+                                <button class="btn btn-ghost btn-sm btn-danger-text" id="clearHistoryBtn">
+                                    <i data-lucide="trash-2" class="btn-sub-icon"></i> Hapus Semua
+                                </button>
+                            </div>
+                        </div>
+                        <div id="tableWrap">
+                            <div class="empty-table" id="emptyTable">
+                                <p>Belum ada riwayat tersimpan. Setelah prediksi, klik “Simpan ke Riwayat”.</p>
+                            </div>
+                            <div class="table-scroll" id="tableScroll" style="display:none">
+                                <table class="cycle-table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Tanggal Simpan</th>
+                                            <th>Panjang Siklus (hari)</th>
+                                            <th>Prediksi Berikutnya (hari)</th>
+                                            <th>Status</th>
+                                            <th>Keyakinan</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cycleTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="side-stack">
+                    <div class="calendar-container panel-card">
+                        <div class="panel-header">
+                            <div class="panel-title-wrap">
+                                <span class="panel-icon">
+                                    <i data-lucide="calendar"></i>
+                                </span>
+                                <h2>Log Siklus Manual</h2>
+                            </div>
+                            <button class="btn btn-primary btn-sm" id="addManualBtn">
+                                <i data-lucide="plus" class="btn-sub-icon"></i> Tambah
+                            </button>
+                        </div>
+                        <p class="cal-month" id="calMonthLabel"></p>
+
+                        <div class="manual-form" id="manualForm" style="display:none">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Panjang Siklus (hari)</label>
+                                    <input type="number" id="manualLength" min="15" max="60" placeholder="28" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Tanggal Mulai</label>
+                                    <input type="date" id="manualDate" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Catatan (opsional)</label>
+                                    <input type="text" id="manualNote" placeholder="Misal: kram ringan" />
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button class="btn btn-primary btn-sm" id="saveManualBtn">Simpan</button>
+                                <button class="btn btn-ghost btn-sm" id="cancelManualBtn">Batal</button>
+                            </div>
+                        </div>
+
+                        <div class="calendar-grid" id="calendarGrid"></div>
+                    </div>
+
+                    <div class="panel-card">
+                        <div class="panel-header">
+                            <div class="panel-title-wrap">
+                                <span class="panel-icon">
+                                    <i data-lucide="lightbulb"></i>
+                                </span>
+                                <h2>Cara membaca data</h2>
+                            </div>
+                        </div>
+                        <div class="info-list">
+                            <div class="info-row">
+                                <span class="info-badge-icon badge-purple">
+                                    <i data-lucide="circle-dot"></i>
+                                </span>
+                                <div>
+                                    <strong>Titik aktual</strong>
+                                    <p>Panjang siklus yang kamu catat, diurutkan dari yang terlama ke terbaru di grafik.</p>
+                                </div>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-badge-icon badge-amber">
+                                    <i data-lucide="minus"></i>
+                                </span>
+                                <div>
+                                    <strong>Garis rata-rata</strong>
+                                    <p>Membantu melihat apakah siklus terakhir lebih pendek atau lebih panjang dari polamu.</p>
+                                </div>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-badge-icon badge-emerald">
+                                    <i data-lucide="shield"></i>
+                                </span>
+                                <div>
+                                    <strong>Pita 21–45 hari</strong>
+                                    <p>Acuan umum. Kalau sering di luar pita ini, pertimbangkan konsultasi medis.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-brand">
+                <img src="assets/logo-mark.png" alt="" class="footer-logo-img" />
+                <span class="footer-wordmark">Siklika</span>
+            </div>
+            <p class="footer-copy">© 2026 Siklika · Data tersimpan hanya di browsermu</p>
+        </div>
+    </footer>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="app.js"></script>
+    <script src="riwayat.js"></script>
+    <script>
+        // Inisialisasi ikon Lucide
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
