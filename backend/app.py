@@ -15,14 +15,16 @@ model = joblib.load(MODEL_DIR / "siklika_model.pkl")
 feat_cols = joblib.load(MODEL_DIR / "feature_cols.pkl")
 global_stats = joblib.load(MODEL_DIR / "global_stats.pkl")
 
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
-gemini_model = None
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "").strip()
+gemini_client = None
+gemini_error = None
+gemini_model_name = "gemini-3.6-flash"
 
 if GEMINI_API_KEY:
     try:
-        import google.generativeai as genai
-        genai.configure(api_key=GEMINI_API_KEY)
-        gemini_model = genai.GenerativeModel("gemini-2.0-flash")
+        from google import genai
+        gemini_client = genai.Client(api_key=GEMINI_API_KEY)
+        print("Gemini client initialized successfully.")
     except Exception as e:
         print(f"Gemini unavailable: {e}")
 
@@ -69,16 +71,35 @@ def build_feature_vector(data: dict) -> tuple[np.ndarray, float, float]:
     X = np.array([[feat_map[f] for f in feat_cols]])
     return X, mean_all, std_all
 
+def _build_kb_reply(info: dict | None) -> str:
+    if info:
+        tips = "\n".join(f"- {t}" for t in info["tips"])
+        flags = "\n".join(f"- {f}" for f in info["red_flags"])
+        return (
+            f"**{info['title']}**\n\n"
+            f"{info['info']}\n\n"
+            f"**Tips awal:**\n{tips}\n\n"
+            f"**Segera ke tenaga medis jika:**\n{flags}\n\n"
+            "_Informasi ini bersifat edukatif, bukan pengganti konsultasi medis._"
+        )
+    return (
+        "Terima kasih sudah bertanya. Coba ketik kata kunci seperti: "
+        "kram, mood, telat, darah, atau keputihan. "
+        "Untuk keluhan serius, konsultasikan langsung ke tenaga medis."
+    )
+
 
 @app.route("/api/health", methods=["GET"])
 def health():
-    return jsonify({
-        "status": "ok",
-        "gemini": gemini_model is not None,
+    payload = {
+        "status" : "ok",
+        "gemini" : gemini_client is not None,
         "features": feat_cols,
         "global_avg_cycle": round(global_stats["mean"], 1),
-    })
-
+    }
+    if gemini_error:
+        payload["gemini_error"] = gemini_error
+    return jsonify(payload)
 
 @app.route("/api/predict", methods=["POST"])
 def predict():
@@ -119,29 +140,25 @@ def chat():
         )
         context = build_chatbot_context(symptom_kw)
 
-        if gemini_model:
-            response = gemini_model.generate_content(f"{context}\n\nPertanyaan: {message}")
-            reply = response.text
-            mode = "gemini"
+        if gemini_client:
+            try:
+                response = gemini_client.models.generate_content(
+                    model=gemini_model_name,
+                    contents=f"{context}\n\nPertanyaan: {message}"
+                )
+                reply = response.text
+                mode = "gemini"
+            except Exception as gemini_err:
+                print(f"Gemini call failed, falling back to KB: {gemini_err}")
+                gemini_client_local = None  # trigger KB fallback below
+                from recommendation_engine import get_symptom_info
+                info = get_symptom_info(symptom_kw or message)
+                reply = _build_kb_reply(info)
+                mode = "kb_fallback"
         else:
             from recommendation_engine import get_symptom_info
             info = get_symptom_info(symptom_kw or message)
-            if info:
-                tips = "\n".join(f"- {t}" for t in info["tips"])
-                flags = "\n".join(f"- {f}" for f in info["red_flags"])
-                reply = (
-                    f"**{info['title']}**\n\n"
-                    f"{info['info']}\n\n"
-                    f"**Tips awal:**\n{tips}\n\n"
-                    f"**Segera ke tenaga medis jika:**\n{flags}\n\n"
-                    "_Informasi ini bersifat edukatif, bukan pengganti konsultasi medis._"
-                )
-            else:
-                reply = (
-                    "Terima kasih sudah bertanya. Coba ketik kata kunci seperti: "
-                    "kram, mood, telat, darah, atau keputihan. "
-                    "Untuk keluhan serius, konsultasikan langsung ke tenaga medis."
-                )
+            reply = _build_kb_reply(info)
             mode = "kb_fallback"
 
         return jsonify({"success": True, "reply": reply, "mode": mode})

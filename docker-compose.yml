@@ -61,5 +61,4 @@ networks:
   siklika-net:
     name: siklika-net
     driver: bridge
-    # If you are running Traefik in a separate compose stack, use an external network:
-    # external: true
+  

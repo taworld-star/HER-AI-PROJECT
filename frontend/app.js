@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:5000/api";
+const API_BASE = "http://siklika-api.neoartd.my.id/api";
 
 const navbar = document.getElementById("navbar");
 if (navbar) {
